@@ -250,3 +250,157 @@
   });
 
 })()
+
+$(function() {
+  $('.material-card > .mc-btn-action').click(function () {
+      var card = $(this).parent('.material-card');
+      var icon = $(this).children('i');
+      icon.addClass('fa-spin-fast');
+
+      if (card.hasClass('mc-active')) {
+          card.removeClass('mc-active');
+
+          window.setTimeout(function() {
+              icon
+                  .removeClass('fa-arrow-left')
+                  .removeClass('fa-spin-fast')
+                  .addClass('fa-bars');
+
+          }, 800);
+      } else {
+          card.addClass('mc-active');
+
+          window.setTimeout(function() {
+              icon
+                  .removeClass('fa-bars')
+                  .removeClass('fa-spin-fast')
+                  .addClass('fa-arrow-left');
+
+          }, 800);
+      }
+  });
+});
+
+
+
+
+const persons = [
+  {
+    name: "Syed Altaf Zaidi",
+    photo: "https://abbascreations.github.io/shanmarketingservices/assets/img/images/ceo.jpg",
+    title: "Founder & CEO",
+    bio:
+      "<p>Welcome to Shan Marketing Services! As you navigate through our website, I hope you learn more about the qualities that make our company an outstanding provider of distribution services and a wonderful place to build a career. With over 25 years of experience in the distribution industry, we have earned the trust and respect of multinational companies such as Nestle, Pepsi-Cola, Seasons Oil to name a few. Our progressive thinking and distinct approach towards our customers and partners prepare us to hit our targets monthly. Furthermore, we value our corporate responsibility and our reputation for corporate integrity attracts great team members, customers, and even greater opportunities. This notion is vital to our long-term success. I am proud of the work we, as a company, do and I can assure you that we will continue to deliver what we promise with complete dedication and commitment.We wish you the best and enjoy our website. Should you have any questions, feel free to contact our local office for any additional information.</p>",
+    social: {
+      facebook: "#",
+      twitter: "https://twitter.com/",
+      linkedin: "#"
+    }
+  },
+  {
+    name: "Syed Wajih Zaidi",
+    photo: "https://abbascreations.github.io/shanmarketingservices/assets/img/images/team1.jpeg",
+    title: "Director",
+    bio:
+      "<p>Welcome to Shan Marketing Services! As you navigate through our website, I hope you learn more about the qualities that make our company an outstanding provider of distribution services and a wonderful place to build a career. With over 25 years of experience in the distribution industry, we have earned the trust and respect of multinational companies such as Nestle, Pepsi-Cola, Seasons Oil to name a few. Our progressive thinking and distinct approach towards our customers and partners prepare us to hit our targets monthly. Furthermore, we value our corporate responsibility and our reputation for corporate integrity attracts great team members, customers, and even greater opportunities. This notion is vital to our long-term success. I am proud of the work we, as a company, do and I can assure you that we will continue to deliver what we promise with complete dedication and commitment.We wish you the best and enjoy our website. Should you have any questions, feel free to contact our local office for any additional information.</p>",
+    social: {
+      facebook: "#",
+      twitter: "https://twitter.com/",
+      linkedin: "#"
+    }
+  },
+  {
+    name: "Syed Mohsin Zaidi",
+    photo: "https://abbascreations.github.io/shanmarketingservices/assets/img/images/anotherteammember.jpg",
+    title: "Director",
+    bio:
+      "<p>Welcome to Shan Marketing Services! As you navigate through our website, I hope you learn more about the qualities that make our company an outstanding provider of distribution services and a wonderful place to build a career. With over 25 years of experience in the distribution industry, we have earned the trust and respect of multinational companies such as Nestle, Pepsi-Cola, Seasons Oil to name a few. Our progressive thinking and distinct approach towards our customers and partners prepare us to hit our targets monthly. Furthermore, we value our corporate responsibility and our reputation for corporate integrity attracts great team members, customers, and even greater opportunities. This notion is vital to our long-term success. I am proud of the work we, as a company, do and I can assure you that we will continue to deliver what we promise with complete dedication and commitment.We wish you the best and enjoy our website. Should you have any questions, feel free to contact our local office for any additional information.</p>",
+    social: {
+      facebook: "#",
+      twitter: "https://twitter.com/",
+      linkedin: "#"
+    }
+  },
+  {
+    name: "Zeeshan Siddique",
+    photo: "https://abbascreations.github.io/shanmarketingservices/assets/img/images/team2.jpeg",
+    title: "Manager Finance",
+    bio:
+      "<p>Welcome to Shan Marketing Services! As you navigate through our website, I hope you learn more about the qualities that make our company an outstanding provider of distribution services and a wonderful place to build a career. With over 25 years of experience in the distribution industry, we have earned the trust and respect of multinational companies such as Nestle, Pepsi-Cola, Seasons Oil to name a few. Our progressive thinking and distinct approach towards our customers and partners prepare us to hit our targets monthly. Furthermore, we value our corporate responsibility and our reputation for corporate integrity attracts great team members, customers, and even greater opportunities. This notion is vital to our long-term success. I am proud of the work we, as a company, do and I can assure you that we will continue to deliver what we promise with complete dedication and commitment.We wish you the best and enjoy our website. Should you have any questions, feel free to contact our local office for any additional information.</p>",
+    social: {
+      facebook: "#",
+      twitter: "https://twitter.com/",
+      linkedin: "#"
+    }
+  }
+];
+
+const app = new Vue({
+  el: "#app",
+  data() {
+    return {
+      persons: persons,
+      selectedPersonIndex: null,
+      isSelected: false,
+      selectedPerson: null,
+      inlineStyles: null,
+      isReady: false,
+      isOk: false,
+      selectedPersonData: {
+        name: null,
+        title: null,
+        photo: null,
+        social: {
+          facebook: null,
+          twitter: null,
+          linkedin: null
+        }
+      }
+    };
+  },
+  methods: {
+    selectPerson(index, el) {
+      if (!this.isOk) {
+        this.selectedPersonIndex = index;
+        this.isSelected = true;
+        el.target.parentElement.className == "person-details"
+          ? (this.selectedPerson = el.target.parentElement.parentElement)
+          : (this.selectedPerson = el.target.parentElement);
+
+        this.selectedPerson.classList.add("person-selected");
+        this.selectedPerson.setAttribute(
+          "style",
+          `width:${this.selectedPerson.offsetWidth}px;`
+        );
+        this.selectedPersonData = this.persons[index];
+        window.setTimeout(() => {
+          this.inlineStyles = `width:${this.selectedPerson
+            .offsetWidth}px;height:${this.selectedPerson
+            .offsetHeight}px;left:${this.selectedPerson.offsetLeft}px;top:${this
+            .selectedPerson.offsetTop}px;position:fixed`;
+          this.selectedPerson.setAttribute("style", this.inlineStyles);
+        }, 400);
+        window.setTimeout(() => {
+          this.isReady = true;
+          this.isOk = true;
+        }, 420);
+      } else {
+        this.reset();
+      }
+    },
+    reset() {
+      this.isReady = false;
+      window.setTimeout(() => {
+        this.selectedPerson.classList.add("person-back");
+      }, 280);
+      window.setTimeout(() => {
+        this.selectedPerson.setAttribute("style", "");
+      }, 340);
+      window.setTimeout(() => {
+        this.isSelected = false;
+        this.selectedPerson.classList.remove("person-back", "person-selected");
+        this.isOk = false;
+      }, 400);
+    }
+  }
+});
